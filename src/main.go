@@ -1,42 +1,31 @@
 package main
 
 import (
-	"fmt"
 	"lifecore"
+	"render"
+	"time"
 )
 
 func main() {
-	fmt.Printf("\033[2J")
-	for i := 0; i < 1000; i++ {
-		fmt.Printf("\033[1;1H")
-		fmt.Println(i)
-		fmt.Println(i)
-		fmt.Printf("%d", i)
-	}
-	fmt.Print("\n")
-
-	//var arrr [][]int
-	//arrr = make([][]int,3,3)
-	//arrr[0][0] = 3
-	//fmt.Println(arrr[1][1])
-
+	row := 40
+	column := 40
 	lb := lifecore.LifeBoard{}
-	lb.InitBoard(3, 4)
-	lb.SetCell(2, 0, true)
-	lb.SetCell(2, 1, true)
-	lb.SetCell(1, 0, true)
+	lb.InitBoard(row, column)
+	lb.SetCell(5, 20, true)
+	lb.SetCell(5, 21, true)
+	lb.SetCell(5, 22, true)
+	lb.SetCell(4,20,true)
+	lb.SetCell(3,21,true)
 
-	lb.NextGen()
+	render.InitScreen()
+	lb.Sync()
 
-	for i := 0; i < 3; i++ {
-		for j := 0; j < 4; j++ {
-			if lb.GetCell(i, j) {
-				fmt.Print("O")
-			} else {
-				fmt.Print("X")
-			}
-		}
-		fmt.Print("\n")
+	for i:=0; i<100; i++{
+		render.Render(lb.CopyBoard,row,column)
+		lb.NextGen()
+		time.Sleep(120 * time.Millisecond)
 	}
+
+
 
 }

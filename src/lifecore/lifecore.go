@@ -2,7 +2,7 @@ package lifecore
 
 type LifeBoard struct {
 	board     [][]bool
-	nextBoard [][]bool
+	CopyBoard [][]bool
 	row       int
 	column    int
 }
@@ -12,14 +12,25 @@ var (
 	iikanjiY = [8]int{0, 1, 1, 1, 0, -1, -1, -1}
 )
 
-func (l *LifeBoard) InitBoard(row, culumn int) {
+func (l *LifeBoard) InitBoard(row, column int) {
 	l.board = make([][]bool, row)
 	for i := 0; i < row; i++ {
-		l.board[i] = make([]bool, culumn)
+		l.board[i] = make([]bool, column)
 	}
-	l.nextBoard = l.board
+	//fmt.Println("board:     ",&l.board[0][0])
+
+	l.CopyBoard = make([][]bool,row)
+	for i := 0; i < row; i++ {
+		l.CopyBoard[i] = make([]bool,column)
+	}
+	//fmt.Println("NextBoard: ",&l.NextBoard[0][0])
+
+	l.Sync()
+
+	//fmt.Println("board:     ",&l.board[0][0])
+	//fmt.Println("NextBoard: ",&l.NextBoard[0][0])
 	l.row = row
-	l.column = culumn
+	l.column = column
 }
 
 func (l *LifeBoard) GetCell(y, x int) bool {
@@ -33,27 +44,46 @@ func (l *LifeBoard) SetCell(y int, x int, cel bool) {
 	l.board[y][x] = cel
 }
 func (l *LifeBoard) setNextCell(y int, x int, cel bool) {
-	l.nextBoard[y][x] = cel
+	l.CopyBoard[y][x] = cel
 }
+
 func (l *LifeBoard) NextGen() {
 	for i := 0; i < l.row; i++ {
 		for j := 0; j < l.column; j++ {
 			cnt := 0
 			for k := 0; k < 8; k++ {
 				if l.GetCell(i+iikanjiY[k], j+iikanjiX[k]) {
+					//fmt.Printf("Trueee i= %d, j= %d \n",i+iikanjiY[k],j+iikanjiX[k])
 					cnt++
 				}
 			}
 			if !l.GetCell(i, j) && cnt == 3 {
 				l.setNextCell(i, j, true)
+				//fmt.Printf("i= %d, j= %d, cnt= %d,誕生\n",i,j,cnt)
 			} else if l.GetCell(i, j) && (cnt == 2 || cnt == 3) {
 				l.setNextCell(i, j, true)
-			} else if l.GetCell(i, j) && cnt >= 1 {
+				//fmt.Printf("i= %d, j= %d, cnt= %d,生存\n",i,j,cnt)
+			} else if l.GetCell(i, j) && cnt <= 1 {
 				l.setNextCell(i, j, false)
+				//fmt.Printf("i= %d, j= %d, cnt= %d,過疎\n",i,j,cnt)
 			} else if l.GetCell(i, j) && cnt >= 4 {
 				l.setNextCell(i, j, false)
+				//fmt.Printf("i= %d, j= %d, cnt= %d,過密\n",i,j,cnt)
+			} else {
+
+				//fmt.Printf("i= %d, j= %d, cnt= %d,else\n",i,j,cnt)
 			}
+			//fmt.Println(l.board)
+			//fmt.Print("\n")
 		}
 	}
-	l.board = l.nextBoard
+	for i := 0; i < l.row; i++{
+		copy(l.board[i],l.CopyBoard[i])
+	}
+}
+
+func (l *LifeBoard) Sync(){
+	for i := 0; i < l.row; i++{
+		copy(l.CopyBoard[i],l.board[i])
+	}
 }
