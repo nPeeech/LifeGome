@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"lifecore"
 	"render"
 
@@ -14,6 +15,7 @@ func main() {
 	lb := lifecore.LifeBoard{}
 	lb.InitBoard(row, column)
 	rand.Seed(time.Now().UnixNano())
+	fmt.Print(rand.Intn(10))
 
 	for i:=0; i<row; i++{
 		for j:=0; j<column; j++{
