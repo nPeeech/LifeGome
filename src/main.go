@@ -8,15 +8,15 @@ import (
 )
 
 func main() {
-	row := 80
-	column := 180
+	row := 10
+	column := 10
 	lb := lifecore.LifeBoard{}
 	lb.InitBoard(row, column)
-	lb.SetCell(5, 50, true)
-	lb.SetCell(5, 51, true)
-	lb.SetCell(5, 52, true)
-	lb.SetCell(4,50,true)
-	lb.SetCell(3,51,true)
+	lb.SetCell(5, 5, true)
+	lb.SetCell(5, 6, true)
+	lb.SetCell(5, 7, true)
+	lb.SetCell(4,5,true)
+	lb.SetCell(3,6,true)
 
 
 	for i:=0; i<row; i++{
@@ -34,7 +34,7 @@ func main() {
 	render.InitScreen()
 	lb.Sync()
 
-	for i:=0; i<1000; i++{
+	for i:=0; i<80; i++{
 		render.Render(lb.CopyBoard,row,column)
 		lb.NextGen()
 		time.Sleep(100 * time.Millisecond)
