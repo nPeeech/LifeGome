@@ -1,0 +1,12 @@
+h1{
+    font-family: Serif;
+}
+h2{
+    font-family: Serif;
+    color: red;
+}
+#LifeBoard{
+    font-size: small;
+    line-height: 50%;
+    font-family: monospace;
+}
