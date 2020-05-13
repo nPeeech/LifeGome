@@ -16,6 +16,7 @@ func Render(board [][]bool, row int, column int){
 			} else {
 				fmt.Print("□")
 			}
+			fmt.Print(" ")
 		}
 		fmt.Print("\n")
 
