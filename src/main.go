@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	time.Sleep(5 * time.Second)
 	row := 100
 	column := 100
 	lb := lifecore.LifeBoard{}
