@@ -1,6 +1,6 @@
 package board2text
 
-func Convert(board [][]bool,row int,column int){
+func Convert(board [][]bool,row int,column int) string{
 	var text string
 	for i:=0; i<row; i++{
 		for j:=0; j<column; j++{
@@ -12,4 +12,5 @@ func Convert(board [][]bool,row int,column int){
 		}
 		text+="<br>"
 	}
+	return text
 }
