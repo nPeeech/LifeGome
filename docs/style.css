@@ -3,10 +3,19 @@ h1{
 }
 h2{
     font-family: Serif;
-    color: red;
+    color: #ff0000;
 }
 #LifeBoard{
     font-size: small;
     line-height: 80%;
     font-family: monospace;
+}
+#JustASecond{
+    font-size: large;
+    animation: LoadingAnime 2s infinite ease;
+}
+@keyframes LoadingAnime {
+    0% {color: black}
+    50% {color: white}
+    100% {color: black}
 }
